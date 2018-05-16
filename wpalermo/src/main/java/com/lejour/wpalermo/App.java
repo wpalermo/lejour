@@ -69,9 +69,7 @@ public class App
 			Integer valorFinal = 0;
 			Integer valorParcial = 0;
 			Integer maior = lista.get(0);
-			Integer segundoMaior = 0;
-			Integer hops = 0;
-			Integer hopsSegundoMaior = 0;
+			Integer segundoMaior = -1;
 			Integer coluna = 0;
 			Integer colunaMaior = 0;
 			Integer colunaSegundoMaior = 0;
@@ -79,16 +77,15 @@ public class App
 			for(Integer valor : lista) {
 				
 				coluna++;
-				hops++;
 				
-				if(valor > maior) {
+				if(valor > maior || valor == maior) {
 					maior = valor;
-					segundoMaior = 0; 
-					hops = 0;
 					colunaMaior = coluna;
-				}else if(valor > segundoMaior && valor != maior) {
+					segundoMaior = -1; 
+					valorFinal += valorParcial;
+					valorParcial = 0;
+				}else if(valor >= segundoMaior) {
 					segundoMaior = valor;
-					hopsSegundoMaior = hops;
 					colunaSegundoMaior = coluna;
 				}
 				
@@ -97,19 +94,44 @@ public class App
 				
 				if(coluna == lista.size()) {
 					
-					Integer dif = 0;
-					
-					if(maior > segundoMaior) {
-						for(Integer i : lista.subList(colunaMaior, colunaSegundoMaior))
-							valorFinal += segundoMaior - i;
+					//Caso de numeros crescentes
+					if(segundoMaior == -1) {
+						returnable.add(0);
+						break;
 					}
 					
-					returnable.add(valorParcial);
+					
+					//Caso com apenas um numero
+					if(lista.size() == 1) {
+						returnable.add(0);
+						break;
+					}
+					
+					if(maior > segundoMaior) {
+						valorParcial = 0;
+						for(Integer i : lista.subList(colunaMaior, colunaSegundoMaior))
+							valorParcial += segundoMaior - i;
+						
+						valorFinal += valorParcial;
+					}
+				
+					//Caso primeiro e o ultimo tenham o mesmo valor e os demais sejam menores
+					if(maior == lista.get(coluna-1))
+						valorFinal += valorParcial;
+					
+					
+					if(valorFinal < 0 )
+						valorFinal = 0;
+					
+					returnable.add(valorFinal);
 				}
 				
 			}
 			
 		}
+		
+		
+		returnable.forEach(System.out::println);
     	
     
     }
