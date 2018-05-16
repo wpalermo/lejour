@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 public class App 
 {
 	
-	final static String PATH = "./src/main/resources/casos/caso1.txt";
+	final static String PATH = "./src/main/resources/casos/caso2.txt";
 	
 	private static Integer qtdCasos = 0;
 	private static Integer linhasCount = 0;
@@ -61,9 +61,28 @@ public class App
 		if(linhasCount/2 != qtdCasos )
 			System.out.println("WARN - Quantidade de linhas diferente da quantidade passada no header");
 		
+		
+		
+		
 		for(List<Integer> lista : values) {
 			
+			Integer valorFinal = 0;
+			Integer valorParcial = 0;
+			Integer maior = lista.get(0);
+			Integer segundoMaior = 0;
 			
+			for(Integer valor : lista) {
+				
+				if(valor > maior) {
+					maior = valor;
+				}else if(valor > segundoMaior) {
+					segundoMaior = valor;
+				}
+					
+				
+				valorParcial += maior-valor;
+				
+			}
 			
 		}
     	
