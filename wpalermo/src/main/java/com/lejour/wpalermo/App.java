@@ -62,7 +62,7 @@ public class App
 			System.out.println("WARN - Quantidade de linhas diferente da quantidade passada no header");
 		
 		
-		
+		List<Integer> returnable = new ArrayList<Integer>();
 		
 		for(List<Integer> lista : values) {
 			
@@ -70,17 +70,42 @@ public class App
 			Integer valorParcial = 0;
 			Integer maior = lista.get(0);
 			Integer segundoMaior = 0;
+			Integer hops = 0;
+			Integer hopsSegundoMaior = 0;
+			Integer coluna = 0;
+			Integer colunaMaior = 0;
+			Integer colunaSegundoMaior = 0;
 			
 			for(Integer valor : lista) {
 				
+				coluna++;
+				hops++;
+				
 				if(valor > maior) {
 					maior = valor;
-				}else if(valor > segundoMaior) {
+					segundoMaior = 0; 
+					hops = 0;
+					colunaMaior = coluna;
+				}else if(valor > segundoMaior && valor != maior) {
 					segundoMaior = valor;
+					hopsSegundoMaior = hops;
+					colunaSegundoMaior = coluna;
 				}
-					
+				
 				
 				valorParcial += maior-valor;
+				
+				if(coluna == lista.size()) {
+					
+					Integer dif = 0;
+					
+					if(maior > segundoMaior) {
+						for(Integer i : lista.subList(colunaMaior, colunaSegundoMaior))
+							valorFinal += segundoMaior - i;
+					}
+					
+					returnable.add(valorParcial);
+				}
 				
 			}
 			
