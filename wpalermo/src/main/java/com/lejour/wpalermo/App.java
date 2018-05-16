@@ -78,7 +78,7 @@ public class App
 				
 				coluna++;
 				
-				if(valor > maior || valor == maior) {
+				if(valor > maior) {
 					maior = valor;
 					colunaMaior = coluna;
 					segundoMaior = -1; 
