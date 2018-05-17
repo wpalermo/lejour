@@ -4,6 +4,8 @@
 
 Foi feito em apenas uma classe com void main() e não foi criado nenhum objeto nem dependencia, apenas dois metodos auxiliares um para buscar a maior silhueta e outro para buscar a segunda maior silhueta. 
 
+Algumas libs do JAVA8 foram usadas, então é necessário JDK8 ou maior.
+
 O projeto contem a pasta "Resources", nela estão os arquivos que serao lidos e é nela que o arquivo de resultado será gravado.
 Caso queira trocar os caminho e nome de aruqivos é só editar os seguintes atributos
 ```
