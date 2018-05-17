@@ -2,7 +2,7 @@
 ### Desafio do alagamento de silhuetas
 
 
-Foi feito em apenas uma classe com void main() e não foi criado nenhum objeto nem dependencia, apenas dois metodos auxiliares um para buscar a maior silhueta e outro para buscar a segunda maior silhueta. 
+Foi feito em apenas uma classe com void main() e não foi criado nenhum objeto e apesar de ter sido criado um projeto maven não foi adicionada nenhuma dependencia, apenas dois metodos auxiliares um para buscar a maior silhueta e outro para buscar a segunda maior silhueta. 
 
 Algumas libs do JAVA8 foram usadas, então é necessário JDK8 ou mais recente.
 
