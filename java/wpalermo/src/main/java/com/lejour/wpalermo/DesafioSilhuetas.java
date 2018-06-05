@@ -2,7 +2,6 @@ package com.lejour.wpalermo;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +10,23 @@ import java.util.stream.Stream;
 
 /**
  * 
+ * O Atributo FILE_NAME é o nome do arquivo.
+ * 
+ * O Atributo RESOURCE_PATH é o caminho da pasta onde o arquivo está (no caso
+ * esta apontando para a pasta resources do projeto)
+ * 
+ * O Atributo RESULT_FILE é o nome do arquivo copm o resultado do processamento,
+ * eh o mesmo nome do arquivo de entrada com _RESULTADO no final. Este será
+ * gravado na mesma pasta do RESORUCE_PATH
+ * 
  * @author william.palermo
  *
  */
 
-
 public class DesafioSilhuetas {
 
-	final static String RESOURCE_PATH = "./src/main/resources/casos/";
 	final static String FILE_NAME = "caso1.txt";
+	final static String RESOURCE_PATH = "./src/main/resources/casos/";
 	final static String RESULT_FILE = FILE_NAME.split("\\.")[0] + "_RESULTADO.txt";
 
 	private static Integer qtdCasos = 0;
@@ -28,17 +35,20 @@ public class DesafioSilhuetas {
 
 	public static void main(String[] args) throws IOException {
 
+		// Lista com todos os valores
 		List<List<Integer>> values = new ArrayList<List<Integer>>();
 
-		Path readPath = Paths.get(RESOURCE_PATH + FILE_NAME);
-		
-		lines = Files.lines(readPath);
+		// Le todas as linhas do arquivo e joga dentro de um stream
+		lines = Files.lines(Paths.get(RESOURCE_PATH + FILE_NAME));
 
-		
+		// Varre o stream e coloca as linhas como String em uma lista com todos os casos
 		List<String> casos = lines.map(String::valueOf).collect(Collectors.toList());
-		
+
+		// Remove a primeira linha com a quantidade de casos no total.
 		qtdCasos = Integer.valueOf(casos.remove(0));
 
+		// Varre todos os casos e pega apenas as linhas com os valores a serem
+		// processados
 		casos.forEach(line -> {
 
 			linhasCount++;
@@ -52,11 +62,14 @@ public class DesafioSilhuetas {
 
 		});
 
+		// Apenas verifica se a quantidade de linhas 'e igual a quantidade de casos e
+		// imprime um WARN como System.out (sem logger)
 		if (linhasCount / 2 != qtdCasos)
 			System.out.println("WARN - Quantidade de linhas diferente da quantidade passada no header");
 
 		List<String> returnable = new ArrayList<String>();
 
+		// LOOP percorre todos os casos
 		for (List<Integer> lista : values) {
 
 			Integer valorParcial = 0;
@@ -64,12 +77,16 @@ public class DesafioSilhuetas {
 			Integer indexSegundoMaior = 0;
 			Integer valor = 0;
 
+			// Loop percorre a linha do caso propriamente dita
 			for (int i = 0; i < lista.size(); i++) {
 
 				valor = lista.get(i);
 
 				indexMaior = buscarIndexMaior(lista, i);
 
+				// No caso de ja ter processado a maior silhueta
+				// Comeca a procurar e contar de maneira descrescente, buscando sempre a segunda
+				// maior e aplicando (qse) a mesma logica
 				if (indexMaior == null) {
 					if (i + 1 == lista.size())
 						break;
@@ -84,18 +101,22 @@ public class DesafioSilhuetas {
 						for (Integer j : lista.subList(i + 1, indexSegundoMaior))
 							valorParcial += valor - j;
 
-						//System.out.println(valorParcial);
+						// System.out.println(valorParcial);
 						i = indexSegundoMaior - 1;
 
 					}
 
+					// else para o caso de a maior silhueta ainda nao ter sido encontrada
+					// IF controla o caso de a proxima maior ser adjacente a atual. Sendo assim,
+					// nada pode ser somado no resultado final
 				} else if (indexMaior == (i + 1))
 					continue;
 				else {
+					// Caso "normal", quando existe uma silhueta maior e esta nao esta adjacente a
+					// atual
 					for (Integer j : lista.subList(i + 1, indexMaior))
 						valorParcial += valor - j;
 
-					//System.out.println(valorParcial);
 					i = indexMaior - 1;
 				}
 
@@ -105,16 +126,14 @@ public class DesafioSilhuetas {
 
 		}
 
-		//System.out.println("-------RESPOSTA------");
-		//returnable.forEach(System.out::println);
-		
+		// Escreve o arquivo
 		Files.write(Paths.get(RESOURCE_PATH + RESULT_FILE), returnable);
 	}
 
-	
 	/**
-	 * Metodo procura na lista se existe alguma outra coluna maior do que a atual.
-	 * E verifica se essa coluna vem depois da atual na seguencia. 
+	 * Metodo procura na lista se existe alguma outra coluna maior do que a atual. E
+	 * verifica se essa coluna vem depois da atual na seguencia.
+	 * 
 	 * @param lista
 	 * @param index
 	 * @return
@@ -135,8 +154,10 @@ public class DesafioSilhuetas {
 	}
 
 	/**
-	 * No caso de ja ter encontrado a maior coluna, esse metodo eh responsavel por encontrar a segunda maior. 
-	 * A partir desse momento, a segunda maior passa a ser considerada como a maior e a logica segue a mesma.
+	 * No caso de ja ter encontrado a maior coluna, esse metodo eh responsavel por
+	 * encontrar a segunda maior. A partir desse momento, a segunda maior passa a
+	 * ser considerada como a maior e a logica segue a mesma.
+	 * 
 	 * @param lista
 	 * @param index
 	 * @return
@@ -148,16 +169,19 @@ public class DesafioSilhuetas {
 
 		Integer segundoMaior = lista.subList(index + 1, lista.size()).stream().max(Integer::compare).get();
 
-		//If para o caso de ter 2 numeros iguais seguidos e esse ser igual ao maior
+		// If para o caso de ter 2 numeros iguais seguidos e esse ser igual ao maior.
+		// Nao se pode retornar o mesmo indice recebido. Sabendo que os 2 numeros
+		// adjacentes sao iguais ao maior, este retorna o proximo indice.
 		if (segundoMaior == numero) {
-			count = index+1;
+			count = index + 1;
 			for (Integer i : lista.subList(index + 1, lista.size())) {
 				if (i == segundoMaior)
 					return count;
 				count++;
 			}
 		} else {
-
+			// em casos "normais" que o segundo maior nao 'e igual ao numero do indice
+			// passado
 			for (Integer i : lista.subList(index, lista.size())) {
 				if (i == segundoMaior)
 					return count;
