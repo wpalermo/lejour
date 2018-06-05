@@ -1,0 +1,25 @@
+{
+  "name": "desafio-silhuetas",
+  "version": "1.0.0",
+  "description": "desafio das silhuetas feito para processo seletivo na Lejour (passando para node para estudo)",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wpalermo/lejour.git"
+  },
+  "keywords": [
+    "lejour",
+    "node",
+    "silhuetas",
+    "desafio"
+  ],
+  "author": "William Palermo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wpalermo/lejour/issues"
+  },
+  "homepage": "https://github.com/wpalermo/lejour#readme"
+}
