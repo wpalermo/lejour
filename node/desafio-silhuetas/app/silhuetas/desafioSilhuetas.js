@@ -13,7 +13,9 @@ var desafio = function(data){
 
     console.log('Iniciando processamento das silhuetas' + data.length );
 
-    var linhas = [];
+    var returnable = [];
+    const casos = [];
+    
     const qtdLinhas = data.shift();
     console.log('HEADER do arquivo: ' + qtdLinhas );
     console.log('Quantidade de casos: ' + data.length/2);
@@ -24,4 +26,61 @@ var desafio = function(data){
         console.log('INFO - Quantidade de linhas OK');
 
 
+    data.forEach((element, index) => {
+
+        
+        console.log(index);
+
+        if(index %2 == 1){
+            let linhas = [];
+            casos.push(element.split(' '));
+        }
+
+    });
+
+    casos.forEach((linha, indexLinha) => {
+
+        let valor;
+
+        element.forEach((element, index) => {
+
+            valor = element;
+
+        });
+
+    });
+    
+
 }
+
+
+function buscarIndexMaior(lista, i){
+
+    let numero = lista.get(i);
+
+    lista.forEach((element, index) => {
+        if(element > numero && index < i)
+            return index;
+    });
+
+};
+
+
+function buscarSegundoMaior(lista, i){
+
+    let segundoMaior = Math.max.apply(Math, lista.slice(index+1, lista.length));
+
+    if(segundoMaior == lista.get(i)){
+        lista.slice(index+1, lista.length).forEach((element, index =>{
+            if(element == segundoMaior)
+                return index;
+        }));
+    }else{
+        lista.slice(index+1, lista.length).forEach((element, index =>{
+            if(element == segundoMaior)
+                return index;
+        }));
+    };
+
+    return null;
+};

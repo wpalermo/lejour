@@ -17,14 +17,17 @@ exports.readFile = function read(callback){
    
     console.log('Iniciando leitura do arquivo ' + FILE_NAME);
 
-    return new Promise((resolve, reject) => {
-        rl.on('line', (line) => {
-            values.push(line);
-        }).on('close', () => { 
-            console.log('Arquivo lido ' + FILE_NAME)
-            console.log('Quantidade de linhas encontradas: ' + values.length);
-            callback(values);
-        });
+    
+    rl.on('line', (line) => {
+        values.push(line);
+    }).on('close', () => { 
+        console.log('Arquivo lido ' + FILE_NAME)
+        console.log('Quantidade de linhas encontradas: ' + values.length);
+
+        //Realiza o callback para funcao que continua o processo
+        //TODO: criar validacao se callback eh uma funcao ou nao.
+        callback(values);
+    });
 
 })};
 
