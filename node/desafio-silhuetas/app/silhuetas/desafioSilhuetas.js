@@ -41,10 +41,40 @@ var desafio = function(data){
     casos.forEach((linha, indexLinha) => {
 
         let valor;
+        let valorParcial;
 
         element.forEach((element, index) => {
 
             valor = element;
+            var indexMaior = await buscarIndexMaior(linha, index);
+
+            if(indexMaior == null){
+                if(index + 1 == linha.length)
+                    break;
+
+                var indexSegundoMaior = await buscarSegundoMaior(linha, index);
+                valor = linha.get(indexSegundoMaior);
+
+                if(indexSegundoMaior == (index + 1))
+                    continue;
+                else{
+                    linha.forEach((element) => {
+                        valorParcial = valorParcial + (valor - element);
+                    });
+                }
+
+            }else if(indexMaior == (index+1)){
+                continue;
+            }else{
+                linha.slice(index +1, indexMaior).forEach((element) => {
+                    valorParcial = valorParcial + (valor - element);
+                })
+
+                index = indexMaior - 1;
+            }
+
+            returnable.push(valorParcial);
+            
 
         });
 
