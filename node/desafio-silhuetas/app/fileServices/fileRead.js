@@ -13,26 +13,20 @@ const rl = readline.createInterface({
 
 let values = [];
 
-exports.readFile = function read(){
+exports.readFile = function read(callback){
    
+    console.log('Iniciando leitura do arquivo ' + FILE_NAME);
+
     return new Promise((resolve, reject) => {
         rl.on('line', (line) => {
             values.push(line);
         }).on('close', () => { 
-            console.log('Arquivo lido')
-            resolve(values);
+            console.log('Arquivo lido ' + FILE_NAME)
+            console.log('Quantidade de linhas encontradas: ' + values.length);
+            callback(values);
         });
 
-    return getList();
 })};
 
-function toList(line){
-    values.push(line);
-}
 
-function getList(){
-    console.log('getList');
-    console.log(values.length);
-    return values;
-}
 
