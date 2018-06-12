@@ -1,15 +1,18 @@
 'use strict'
 
-const fileRead = require('../fileServices/fileRead.js')
+const fileRead = require('../fileServices/fileRead.js');
 
 exports.run = function(){
-
     fileRead.readFile(desafio);
-
+   //desafio(null, 1);
 };
 
 
-var desafio = function(data){
+var desafio = function(err, data){
+    if(err){
+        console.error(err.message);
+        throw err;
+    }
 
     console.log('Iniciando processamento das silhuetas' + data.length );
 
@@ -43,16 +46,17 @@ var desafio = function(data){
         let valor;
         let valorParcial;
 
-        element.forEach((element, index) => {
+        for(var index = 0; index < linha.length; index++) {
 
+            let element = linha[index];
             valor = element;
-            var indexMaior = await buscarIndexMaior(linha, index);
+            var indexMaior = buscarIndexMaior(linha, index);
 
             if(indexMaior == null){
                 if(index + 1 == linha.length)
                     break;
 
-                var indexSegundoMaior = await buscarSegundoMaior(linha, index);
+                var indexSegundoMaior = buscarSegundoMaior(linha, index);
                 valor = linha.get(indexSegundoMaior);
 
                 if(indexSegundoMaior == (index + 1))
@@ -76,7 +80,7 @@ var desafio = function(data){
             returnable.push(valorParcial);
             
 
-        });
+        };
 
     });
     
@@ -86,7 +90,7 @@ var desafio = function(data){
 
 function buscarIndexMaior(lista, i){
 
-    let numero = lista.get(i);
+    let numero = lista[i];
 
     lista.forEach((element, index) => {
         if(element > numero && index < i)
