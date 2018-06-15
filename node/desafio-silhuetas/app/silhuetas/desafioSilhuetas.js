@@ -31,9 +31,6 @@ var desafio = function(err, data){
 
     data.forEach((element, index) => {
 
-        
-        console.log(index);
-
         if(index %2 == 1){
             let linhas = [];
             casos.push(element.split(' '));
@@ -43,10 +40,11 @@ var desafio = function(err, data){
 
     casos.forEach((linha, indexLinha) => {
 
-        let valor;
-        let valorParcial;
+        let valor = 0;
+        let valorParcial = 0;
+        var index = 0;
 
-        for(var index = 0; index < linha.length; index++) {
+        for(index; index < linha.length; index++) {
 
             valor = linha[index];;
             var indexMaior = buscarIndexMaior(linha, index);
@@ -61,9 +59,12 @@ var desafio = function(err, data){
                 if(indexSegundoMaior == (index + 1))
                     continue;
                 else{
-                    linha.forEach((element) => {
+
+                    for(var element in linha.slice(index + 1, indexSegundoMaior))
                         valorParcial = valorParcial + (valor - element);
-                    });
+
+                    index = indexSegundoMaior - 1;
+               
                 }
 
             }else if(indexMaior == (index+1)){
@@ -76,10 +77,13 @@ var desafio = function(err, data){
                 index = indexMaior - 1;
             }
 
+
+        };
+            console.log(valorParcial);
             returnable.push(valorParcial);
             
 
-        };
+     
 
     });
     
@@ -87,12 +91,12 @@ var desafio = function(err, data){
 }
 
 
-function buscarIndexMaior(lista, i){
+function buscarIndexMaior(lista, index){
 
-    let numero = lista[i];
+    let numero = lista[index];
 
-    lista.forEach((element, index) => {
-        if(element > numero && index < i)
+    lista.forEach((element, count) => {
+        if(element > numero && count < index)
             return index;
     });
 
@@ -103,19 +107,27 @@ function buscarIndexMaior(lista, i){
 
 function buscarSegundoMaior(lista, index){
 
-
+    let count = index;
     let segundoMaior = Math.max.apply(Math, lista.slice(index+1, lista.length));
 
     if(segundoMaior == lista[index]){
-        lista.slice(index+1, lista.length).forEach((element, index) =>{
+
+        var subList = lista.slice(index+1, lista.length);
+
+        for(var i = 0; i< subList.length; i++){
+            let element = subList[i];
             if(element == segundoMaior)
-                return index;
-        });
+                return i;
+        }
+
     }else{
-        lista.slice(index+1, lista.length).forEach((element, index) =>{
+        var subList = lista.slice(index, lista.length);
+        
+        for(var i = 0; i< subList.length; i++){
+            let element = subList[i];
             if(element == segundoMaior)
-                return index;
-        });
+                return i;
+        }
     };
 
     return null;
