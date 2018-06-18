@@ -32,22 +32,37 @@ var desafio = function(err, data){
     data.forEach((element, index) => {
 
         if(index %2 == 1){
-            let linhas = [];
-            casos.push(element.split(' '));
+            let linha = element.split(' ');
+
+             
+            
+            
+            casos.push(linha);
+
         }
 
     });
 
-    casos.forEach((linha, indexLinha) => {
+    var indexLinha = 0;
 
+    for(indexLinha; indexLinha < casos.length; indexLinha++) {
+
+        var linha = casos[indexLinha];
         let valor = 0;
         let valorParcial = 0;
         var index = 0;
 
-        for(index; index < linha.length; index++) {
+        
 
-            valor = linha[index];;
+        if(linha[linha.length-1] == '')
+            linha = linha.slice(0, linha.length-1);
+
+        for(index; index < linha.length-1; index++) {
+
+            valor = linha[index];
             var indexMaior = buscarIndexMaior(linha, index);
+
+
 
             if(indexMaior == null){
                 if(index + 1 == linha.length)
@@ -70,9 +85,11 @@ var desafio = function(err, data){
             }else if(indexMaior == (index+1)){
                 continue;
             }else{
-                linha.slice(index +1, indexMaior).forEach((element) => {
+                var linha1 = linha.slice(index +1, indexMaior);
+
+                for(var element in linha1)
                     valorParcial = valorParcial + (valor - element);
-                })
+                
 
                 index = indexMaior - 1;
             }
@@ -85,7 +102,7 @@ var desafio = function(err, data){
 
      
 
-    });
+    };
     
 
 }
@@ -95,10 +112,12 @@ function buscarIndexMaior(lista, index){
 
     let numero = lista[index];
 
-    lista.forEach((element, count) => {
-        if(element > numero && count < index)
-            return index;
-    });
+    var i=0;
+    for(i; i<lista.length; i++){
+        var element = lista[i];
+        if(element > numero && index < i)
+            return i;
+    };
 
     return null;
 
@@ -108,13 +127,13 @@ function buscarIndexMaior(lista, index){
 function buscarSegundoMaior(lista, index){
 
     let count = index;
-    let segundoMaior = Math.max.apply(Math, lista.slice(index+1, lista.length));
+    let segundoMaior = Math.max.apply(Math, lista.slice(index+1, lista.length-1));
 
     if(segundoMaior == lista[index]){
 
         var subList = lista.slice(index+1, lista.length);
-
-        for(var i = 0; i< subList.length; i++){
+        var i=0;
+        for(i = 0; i< subList.length; i++){
             let element = subList[i];
             if(element == segundoMaior)
                 return i;
@@ -122,8 +141,9 @@ function buscarSegundoMaior(lista, index){
 
     }else{
         var subList = lista.slice(index, lista.length);
-        
-        for(var i = 0; i< subList.length; i++){
+
+        var i =0;
+        for(i = 0; i< subList.length; i++){
             let element = subList[i];
             if(element == segundoMaior)
                 return i;
