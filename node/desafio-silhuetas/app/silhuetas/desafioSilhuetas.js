@@ -57,7 +57,7 @@ var desafio = function(err, data){
         if(linha[linha.length-1] == '')
             linha = linha.slice(0, linha.length-1);
 
-        for(index; index < linha.length-1; index++) {
+        for(index; index < linha.length; index++) {
 
             valor = linha[index];
             var indexMaior = buscarIndexMaior(linha, index);
@@ -75,8 +75,10 @@ var desafio = function(err, data){
                     continue;
                 else{
 
-                    for(var element in linha.slice(index + 1, indexSegundoMaior))
-                        valorParcial = valorParcial + (valor - element);
+                    let linha1 = linha.slice(index + 1, indexSegundoMaior);
+
+                    for(var element in linha1)
+                        valorParcial = valorParcial + (valor - linha1[element]);
 
                     index = indexSegundoMaior - 1;
                
@@ -85,10 +87,10 @@ var desafio = function(err, data){
             }else if(indexMaior == (index+1)){
                 continue;
             }else{
-                var linha1 = linha.slice(index +1, indexMaior);
+                let linha1 = linha.slice(index +1, indexMaior);
 
                 for(var element in linha1)
-                    valorParcial = valorParcial + (valor - element);
+                    valorParcial = valorParcial + (valor - linha1[element]);
                 
 
                 index = indexMaior - 1;
@@ -128,10 +130,14 @@ function buscarSegundoMaior(lista, index){
 
     let count = index;
     let segundoMaior = 0
+    let listAux = lista.slice(index+1, lista.length);
     if(index + 1  == lista.length-1)
         segundoMaior = lista[index+1]
     else
-        segundoMaior = Math.max.apply(Math, lista.slice(index+1, lista.length-1));
+        segundoMaior = Math.max.apply(Math, listAux);
+
+
+
 
     if(segundoMaior == parseInt(lista[index])){
 
