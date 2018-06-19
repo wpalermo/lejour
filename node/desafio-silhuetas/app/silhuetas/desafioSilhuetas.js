@@ -2,7 +2,8 @@
 
 const fileRead = require('../fileServices/fileRead.js');
 
-exports.run = function(){
+exports.run = function(filePath, fileName){
+    fileRead.readStream(filePath, fileName);
     fileRead.readFile(desafio);
    //desafio(null, 1);
 };
@@ -105,6 +106,8 @@ var desafio = function(err, data){
      
 
     };
+
+    fileRead.createFile(returnable);
     
 
 }

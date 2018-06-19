@@ -4,7 +4,7 @@
   "description": "desafio das silhuetas feito para processo seletivo na Lejour (passando para node para estudo)",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node index.js ./resources/ caso2.txt"
   },
   "repository": {
     "type": "git",

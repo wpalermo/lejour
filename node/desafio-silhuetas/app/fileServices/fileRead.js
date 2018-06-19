@@ -2,8 +2,8 @@
 
 const fs = require('fs');
 const readline = require('readline');
-const FILE_PATH = './resources/';
-const FILE_NAME = 'caso1.txt';
+let FILE_PATH = './resources/';
+let FILE_NAME = 'caso1.txt';
 
 var stream = fs.createReadStream(FILE_PATH + FILE_NAME)
 
@@ -14,6 +14,12 @@ const rl = readline.createInterface({
 });
 
 let values = [];
+
+
+exports.readStream = function readStream(filePath, fileName){
+    console.log("Arquivo: " + filePath + fileName)
+    stream = fs.createReadStream(filePath + fileName);
+}
 
 exports.readFile = function read(callback){
    
@@ -39,6 +45,17 @@ exports.readFile = function read(callback){
     });
 
 };
+
+exports.createFile = function createFile(toWrite){
+    let createStream = fs.createWriteStream(FILE_PATH + "resultado");
+    createStream.once('open', function(fd){
+
+        for(index in toWrite){
+            createStream.write(toWrite[index]);
+        }
+
+    });
+}
 
 
 
