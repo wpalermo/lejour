@@ -110,11 +110,11 @@ var desafio = function(err, data){
 
 function buscarIndexMaior(lista, index){
 
-    let numero = lista[index];
+    let numero = parseInt(lista[index]);
 
     var i=0;
     for(i; i<lista.length; i++){
-        var element = lista[i];
+        var element = parseInt(lista[i]);
         if(element > numero && index < i)
             return i;
     };
@@ -127,26 +127,35 @@ function buscarIndexMaior(lista, index){
 function buscarSegundoMaior(lista, index){
 
     let count = index;
-    let segundoMaior = Math.max.apply(Math, lista.slice(index+1, lista.length-1));
+    let segundoMaior = 0
+    if(index + 1  == lista.length-1)
+        segundoMaior = lista[index+1]
+    else
+        segundoMaior = Math.max.apply(Math, lista.slice(index+1, lista.length-1));
 
-    if(segundoMaior == lista[index]){
+    if(segundoMaior == parseInt(lista[index])){
 
         var subList = lista.slice(index+1, lista.length);
+        count = index+1;
+
         var i=0;
-        for(i = 0; i< subList.length; i++){
+        for (var i in subList){
             let element = subList[i];
             if(element == segundoMaior)
-                return i;
+                return count;
+            
+            count++;
         }
 
     }else{
         var subList = lista.slice(index, lista.length);
 
-        var i =0;
-        for(i = 0; i< subList.length; i++){
+        for(var i in subList){
             let element = subList[i];
             if(element == segundoMaior)
-                return i;
+                return count;
+
+            count = count + 1;
         }
     };
 
